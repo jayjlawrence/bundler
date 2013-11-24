@@ -81,7 +81,9 @@ module Bundler
           git_scope = "#{base_name}-#{shortref_for_path(revision)}"
 
           if Bundler.requires_sudo?
-            Bundler.user_bundle_path.join(Bundler.ruby_scope).join(git_scope)
+            path = Bundler.user_bundle_path.join(Bundler.ruby_scope).join(git_scope)
+            Bundler.ui.warn "Bundler install path #{Bundler.user_bundle_path} not writable, using #{path} for #{git_scope}"
+            path
           else
             Bundler.install_path.join(git_scope)
           end
